@@ -5,13 +5,15 @@ import numpy as np
 #scale: стандартное отклонение нормального распределения (в нашем случае 10)
 #size: размер матрицы (в нашем случае (1000, 50))
 
-X = np.random.normal(loc=1, scale=10, size=(1000, 50))
 
-m = np.mean(X, axis=0)
-std = np.std(X, axis=0)
-X_norm = ((X - m)  / std)
+X = np.random.normal(loc=1, scale=10, size=(50, 50))
+y = X[...,0]
+print y
 
-print X
-print '-------'
-r = np.sum(X, axis = 1)
-print np.nonzero(r > 10)
+
+#r = np.sum(X, axis = 1)
+#print np.nonzero(r > 10)
+
+#print '-------'
+#print np.mean(X, axis=0)
+#print '-------'
