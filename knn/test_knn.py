@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+#выбрать оптимальное число соседей
 import pandas as pd
 import numpy as np
 import sys
