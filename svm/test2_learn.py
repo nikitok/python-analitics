@@ -15,7 +15,7 @@ newsgroups = datasets.fetch_20newsgroups(
 X = newsgroups.data
 y = newsgroups.target
 
-#print X
+print X
 
 #Одна из сложностей работы с текстовыми данными состоит в том, что для них нужно построить числовое представление.
 #Одним из способов нахождения такого представления является вычисление TF-IDF. В Scikit-Learn это реализовано
@@ -28,21 +28,22 @@ vectorizer = TfidfVectorizer(analyzer = 'word')
 X_ = vectorizer.fit_transform(X)
 X = vectorizer.transform(X)
 
-#print X_
-#print vectorizer.get_feature_names()
+print X_
+print vectorizer.get_feature_names()
 
 #print X
 #print vectorizer.get_feature_names()
 
-clf = SVC(kernel='linear', random_state=241, C=4)
-clf.fit(X, y)
-resNumber=np.argsort(np.abs(clf.coef_.data))[-10:]
-print clf.coef_
-print clf.coef_.data
-print resNumber
+grid = {'C': np.power(10.0, np.arange(-5, 6))}
+cv = KFold(y.size, n_folds=5, shuffle=True, random_state=241)
+clf = SVC(kernel='linear', random_state=241)
+gs = GridSearchCV(clf, grid, scoring='accuracy', cv=cv)
+gs.fit(X, y)
+for a in gs.grid_scores_:
+    mean = a.mean_validation_score #— оценка качества по кросс-валидации
+    parameters = a.parameters #— значения параметров
+    print mean
+    print parameters
 
-
-for i in range(10):
-    print vectorizer.get_feature_names()[resNumber[i]]
 
 print 'end'
