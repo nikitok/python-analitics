@@ -25,8 +25,8 @@ y = newsgroups.target
 
 from  sklearn.feature_extraction.text import TfidfVectorizer
 vectorizer = TfidfVectorizer(analyzer = 'word')
-X_ = vectorizer.fit_transform(X)
-X = vectorizer.transform(X)
+X_1 = vectorizer.fit_transform(X)
+X_2 = vectorizer.transform(X)
 
 #print X_
 #print vectorizer.get_feature_names()
@@ -34,15 +34,30 @@ X = vectorizer.transform(X)
 #print X
 #print vectorizer.get_feature_names()
 
-clf = SVC(kernel='linear', random_state=241, C=4)
-clf.fit(X, y)
-resNumber=np.argsort(np.abs(clf.coef_.data))[-10:]
-print clf.coef_
-print clf.coef_.data
-print resNumber
+clf = SVC(kernel='linear', random_state=241, C=1)
+clf.fit(X_1, y)
 
 
+#resNumber=np.argsort(np.abs(clf.coef_.data))[-10:]
+#dens_f = clf.coef_.todense()
+#sort_f = np.absolute(np.asarray(dens_f)).reshape(-1)
+#bst_f = np.argsort(sort_f)[-10:]
+#print clf.coef_.todense()
+#bst_f = abs(clf.coef_.todense()).argpartition(-10)[-10:]
+#print bst_f
+
+bst_f = np.argsort(np.absolute(np.asarray(clf.coef_.todense())).reshape(-1))[-10:]
+print bst_f
+#a,a,b,g,k,m,n,r,s,s
+#print pd.Series(clf.coef_.toarray().reshape(-1)).abs().nlargest(10).index
+
+result = []
 for i in range(10):
-    print vectorizer.get_feature_names()[resNumber[i]]
+    res = vectorizer.get_feature_names()[bst_f[i]]
+    result.append(res)
+
+#atheism atheists bible god keith moon nick religion sky space
+print np.sort(result)
+print vectorizer.get_feature_names()[bst_f]
 
 print 'end'
