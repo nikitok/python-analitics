@@ -7,7 +7,7 @@ import pandas as pd
 data = pd.read_csv('close_prices.csv')
 djia = pd.read_csv('djia_index.csv')
 X = data.ix[:,1:31].values
-#prices = df.drop("date", axis=1) # (374, 30)
+pricesOnly = data.drop("date", axis=1) # (374, 30)
 
 from sklearn.decomposition import  PCA
 
@@ -19,7 +19,8 @@ print np.corrcoef(price[::,0], djia['^DJI'].values)
 
 components = pca.components_
 components2 = pca.explained_variance_ratio_
-#print components2
+t = list(zip(pca.components_[0], pricesOnly.columns))
+print(max(t))
 #print len(components2)
 #print len(djia['^DJI'].values)
 
