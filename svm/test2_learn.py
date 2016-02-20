@@ -15,7 +15,7 @@ newsgroups = datasets.fetch_20newsgroups(
 X = newsgroups.data
 y = newsgroups.target
 
-#print X
+print X
 
 #Одна из сложностей работы с текстовыми данными состоит в том, что для них нужно построить числовое представление.
 #Одним из способов нахождения такого представления является вычисление TF-IDF. В Scikit-Learn это реализовано
