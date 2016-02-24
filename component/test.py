@@ -3,6 +3,7 @@ import math
 import numpy as np
 import numpy as numpy
 import pandas as pd
+import sklearn
 
 data = pd.read_csv('close_prices.csv')
 djia = pd.read_csv('djia_index.csv')
@@ -11,7 +12,7 @@ pricesOnly = data.drop("date", axis=1) # (374, 30)
 
 from sklearn.decomposition import  PCA
 
-pca = PCA(n_components=10)
+pca = sklearn.decomposition.PCA(n_components=10)
 pca.fit(X)
 price = pca.transform(X)
 #print price[::,0]
