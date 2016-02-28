@@ -25,25 +25,10 @@ X = data.drop(['Activity'], axis=1).values
 # и random_state = 241.
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.8, random_state=241)
 
-#Обучите GradientBoostingClassifier с параметрами n_estimators=250, verbose=True, random_state=241
-# и для каждого значения learning_rate из списка [1, 0.5, 0.3, 0.2, 0.1] проделайте следующее:
-
-
-learning_rate = [1, 0.5, 0.3, 0.2, 0.1]
-
-for i in learning_rate:
-    print "learning_rate: %d" %(i)
-    clf = sklearn.ensemble.GradientBoostingClassifier(n_estimators=250, verbose=True, random_state=241, learning_rate = i)
-    clf.fit(X_train, y_train)
-
-    #Метод predict_proba возвращает матрицу, i-й столбец которой содержит оценки принадлежности i-му классу.
-    #В примере мы берем столбец с оценками принадлежности первому классу.
-    pred = clf.predict_proba(X_test)[:, 1]
-
-    #Чтобы была возможность оценить качество построенной композиции на каждой итерации,
-    # у класса есть метод staged_decision_function. Для заданной выборки он возвращает ответ на каждой итерации.
-    #clf.staged_decision_function(X_test)
-
-    #Преобразуйте полученное предсказание с помощью сигмоидной функции по формуле 1 / (1 + e^{−y_pred}), где y_pred — предсказаное значение.
-    #predTransform = 1/(1 + math.exp(-1 * pred))
-    print pred
+#3 answer
+clf = sklearn.ensemble.RandomForestClassifier(n_estimators=37, verbose=True, random_state=241)
+clf.fit(X_train, y_train)
+pred = clf.predict_proba(X_test)[:, 1]
+transformed = pred
+logross = sklearn.metrics.log_loss(y_test, transformed)
+print logross
